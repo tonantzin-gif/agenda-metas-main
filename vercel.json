@@ -1,14 +1,18 @@
 {
-  "experimentalServices": {
+  "buildCommand": "cd backend && npm install && cd ../frontend && npm install",
+  "deployCommand": "echo 'Building individual services...'",
+  "projects": {
     "frontend": {
       "root": "frontend",
-      "routePrefix": "/",
-      "framework": "vite"
+      "buildCommand": "npm run build",
+      "outputDirectory": "dist",
+      "framework": "vite",
+      "env": ["VITE_API_URL"]
     },
     "backend": {
       "root": "backend",
-      "entrypoint": "api/index.js",
-      "routePrefix": "/api"
+      "buildCommand": "npm install",
+      "framework": "nodejs"
     }
   }
 }

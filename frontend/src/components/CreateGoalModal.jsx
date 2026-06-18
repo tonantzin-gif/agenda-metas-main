@@ -64,13 +64,16 @@ export default function CreateGoalModal({ isOpen, onClose, onSave }) {
       });
 
       if (!response.ok) {
-        throw new Error('No se pudo guardar la meta. Intenta de nuevo.');
+        // attempt to parse error body if any
+        let errBody = null;
+        try { errBody = await response.json(); } catch(_) { /* ignore */ }
+        throw new Error((errBody && errBody.msg) || 'No se pudo guardar la meta. Intenta de nuevo.');
       }
 
-      const data = await response.json();
-      
+      const { default: parseJSONSafe, parseJSONSafe: parseJSONSafeNamed } = await import('../utils/parseJSONSafe');
+      const data = await parseJSONSafeNamed(response);
       // Notificar al componente padre que la meta se guardó con éxito
-      onSave(data); 
+      onSave(data);
     } catch (err) {
       // Manejo de errores de red o servidor
       setError(err.message || 'Error de conexión con el servidor.');

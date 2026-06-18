@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Navbar from "../components/Navbar";
 import { API_URL } from "../config";
+import { parseJSONSafe } from "../utils/parseJSONSafe";
 
 export default function DashboardScreen({ goals, onSelectGoal, onNavigate }) {
   // Estados locales para controlar la información del usuario autenticado
@@ -24,21 +25,24 @@ export default function DashboardScreen({ goals, onSelectGoal, onNavigate }) {
 
     // 2. Si hay un usuario en sesión, consultamos su progreso real en el backend
     if (idUsuarioLogueado) {
-      fetch(`${API_URL}/api/meta/progreso/${idUsuarioLogueado}`)
-        .then((res) => res.json())
-        .then((datos) => {
-          if (datos.ok) {
-            // Limpiamos el string del porcentaje (ej: "88%" -> 88) para el SVG
+      (async () => {
+        try {
+          const res = await fetch(`${API_URL}/api/meta/progreso/${idUsuarioLogueado}`);
+          const datos = await parseJSONSafe(res);
+          if (datos && datos.ok) {
             const porcentajeNumerico = parseInt(datos.porcentajeProgreso) || 0;
-            
             setProgresoReal({
               active: datos.totalMetas - datos.metasCompletadas,
               completed: datos.metasCompletadas,
               avgProgress: porcentajeNumerico
             });
+          } else if (datos && !datos.ok) {
+            console.error('Error del servidor al obtener progreso:', datos.msg || datos);
           }
-        })
-        .catch((err) => console.error("Error al jalar el progreso real:", err));
+        } catch (err) {
+          console.error("Error al jalar el progreso real:", err);
+        }
+      })();
     }
   }, []);
 

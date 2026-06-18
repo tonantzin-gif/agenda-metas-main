@@ -35,7 +35,7 @@ export default function RegisterScreen({ onRegister, onNavigateLogin }) {
     try {
       // 2. Conexión Real con tu API de Node.js en el puerto 3000
       // REVISIÓN DE QA: Ajusta las llaves 'Nombre', 'Correo', 'Contrasena' según lo que reciba tu backend
-      const respuesta = await fetch(`${API_URL}/auth/register`, {
+      const respuesta = await fetch(`${API_URL}/api/auth/register`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

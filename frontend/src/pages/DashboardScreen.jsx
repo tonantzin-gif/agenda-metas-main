@@ -24,7 +24,7 @@ export default function DashboardScreen({ goals, onSelectGoal, onNavigate }) {
 
     // 2. Si hay un usuario en sesión, consultamos su progreso real en el backend
     if (idUsuarioLogueado) {
-      fetch(`${API_URL}/meta/progreso/${idUsuarioLogueado}`)
+      fetch(`${API_URL}/api/meta/progreso/${idUsuarioLogueado}`)
         .then((res) => res.json())
         .then((datos) => {
           if (datos.ok) {

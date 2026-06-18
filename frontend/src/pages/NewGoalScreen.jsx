@@ -32,7 +32,7 @@ export default function NewGoalScreen({ onSave, onCancel }) {
   useEffect(() => {
     const obtenerCategorias = async () => {
       try {
-        const respuesta = await fetch(`${API_URL}/categorias`);
+        const respuesta = await fetch(`${API_URL}/api/categorias`);
         if (respuesta.ok) {
           const datos = await respuesta.json();
           if (datos && datos.length > 0) {
@@ -74,7 +74,7 @@ export default function NewGoalScreen({ onSave, onCancel }) {
 
     try {
       // Petición POST estructurada para MariaDB
-      const respuesta = await fetch(`${API_URL}/meta`, {
+      const respuesta = await fetch(`${API_URL}/api/meta`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

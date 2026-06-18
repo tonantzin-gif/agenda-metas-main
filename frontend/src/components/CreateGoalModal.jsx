@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { API_URL } from '../config';
 
 export default function CreateGoalModal({ isOpen, onClose, onSave }) {
   const [title, setTitle] = useState('');
@@ -48,18 +49,17 @@ export default function CreateGoalModal({ isOpen, onClose, onSave }) {
     // --- CONEXIÓN CON EL BACKEND (POST /goals) ---
     setLoading(true);
     try {
-      // Reemplaza esta URL por la de tu backend real (ej: 'http://localhost:5000/api/goals')
-      const response = await fetch('https://api.goalflow.com/v1/goals', {
+      const response = await fetch(`${API_URL}/api/meta`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          // Descomenta si usas autenticación JWT
-          // 'Authorization': `Bearer ${localStorage.getItem('token')}`
         },
         body: JSON.stringify({
-          title: title.trim(),
-          dueDate,
-          category,
+          Titulo: title.trim(),
+          Fecha_Limite: dueDate,
+          Categoria_ID: category,
+          Creador_ID: 1,
+          Responsable_ID: 1,
         }),
       });
 

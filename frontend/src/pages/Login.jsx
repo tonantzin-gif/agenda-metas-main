@@ -13,7 +13,7 @@ export default function Login({ onLogin, onNavigateRegister, onNavigateForgot })
     setErrorMsg(''); 
 
     try {
-      const respuesta = await fetch(`${API_URL}/auth/login`, {
+      const respuesta = await fetch(`${API_URL}/api/auth/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

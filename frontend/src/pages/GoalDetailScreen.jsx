@@ -47,7 +47,7 @@ export default function GoalDetailScreen({ goal, onBack, onUpdateProgress, onTri
       console.log(`Enviando petición PUT a la API para la Meta ID: ${idMeta}`);
 
       // Petición conectada directo a tu controlador de Express en el puerto 3000
-      const respuesta = await fetch(`${API_URL}/meta/${idMeta}`, {
+      const respuesta = await fetch(`${API_URL}/api/meta/${idMeta}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

@@ -1,0 +1,9 @@
+# Ignorar dependencias de Node
+**/node_modules/
+
+# Ignorar variables de entorno secretas
+**/.env
+
+# Archivos del sistema
+.DS_Store
+.vscode/

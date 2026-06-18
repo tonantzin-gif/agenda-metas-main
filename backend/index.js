@@ -26,10 +26,10 @@ app.use(cors({
 }));
 app.use(express.json());
 
-app.use('/api/auth', require('./routes/authRoutes'));
-app.use('/api/meta', require('./routes/metaRoutes'));
+app.use('/auth', require('./routes/authRoutes'));
+app.use('/meta', require('./routes/metaRoutes'));
 
-app.get('/api/categorias', async (req, res) => {
+app.get('/categorias', async (req, res) => {
   try {
     const [rows] = await db.query('SELECT * FROM Categoria');
     res.json(rows);
@@ -43,7 +43,7 @@ app.get('/', (req, res) => {
   res.send('¡Servidor de la Agenda de Metas corriendo con éxito!');
 });
 
-app.get('/api/health', async (req, res) => {
+app.get('/health', async (req, res) => {
   try {
     await db.query('SELECT 1');
     res.json({ ok: true, db: db.isPostgres ? 'postgresql' : 'mysql' });

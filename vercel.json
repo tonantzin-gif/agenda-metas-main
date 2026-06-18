@@ -1,18 +1,22 @@
 {
-  "buildCommand": "cd backend && npm install && cd ../frontend && npm install",
-  "deployCommand": "echo 'Building individual services...'",
-  "projects": {
-    "frontend": {
-      "root": "frontend",
-      "buildCommand": "npm run build",
-      "outputDirectory": "dist",
-      "framework": "vite",
-      "env": ["VITE_API_URL"]
+  "version": 2,
+  "builds": [
+    {
+      "src": "frontend/package.json",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "dist"
+      }
     },
-    "backend": {
-      "root": "backend",
-      "buildCommand": "npm install",
-      "framework": "nodejs"
+    {
+      "src": "backend/api/index.js",
+      "use": "@vercel/node"
     }
-  }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "/backend/api/index.js"
+    }
+  ]
 }

@@ -43,6 +43,24 @@ app.get('/', (req, res) => {
   res.send('¡Servidor de la Agenda de Metas corriendo con éxito!');
 });
 
+app.get('/debug', async (req, res) => {
+  const debug = {
+    env: process.env.NODE_ENV,
+    vercel: !!process.env.VERCEL,
+    hasDatabase: !!process.env.DATABASE_URL || !!process.env.DB_HOST,
+    dbType: process.env.DATABASE_URL ? 'PostgreSQL' : 'MySQL'
+  };
+  
+  try {
+    await db.query('SELECT 1');
+    debug.dbConnection = 'OK';
+  } catch (err) {
+    debug.dbConnection = 'FAILED: ' + err.message;
+  }
+  
+  res.json(debug);
+});
+
 app.get('/api/health', async (req, res) => {
   try {
     await db.query('SELECT 1');
